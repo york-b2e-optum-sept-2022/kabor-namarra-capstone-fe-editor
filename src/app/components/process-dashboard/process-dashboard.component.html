@@ -1,0 +1,11 @@
+<div *ngIf="!viewingProcess">
+  <div>
+    <app-process-list></app-process-list>
+  </div>
+  <h3>
+    <button (click)="onCreateClick()">+</button>
+  </h3>
+</div>
+<div *ngIf="viewingProcess">
+  <app-process></app-process>
+</div>

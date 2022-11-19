@@ -1,0 +1,49 @@
+<div>
+  <button (click)="onCancelClick()">Cancel</button>
+  <button (click)="onSaveClick()">Save Stage</button>
+</div>
+<div>
+  <textarea [(ngModel)]="stage.question"></textarea>
+  <div>
+    Pick stage type:
+  </div>
+  <span>
+    Stage Type:
+  <button class="btn btn-primary" aria-pressed="false" (click)="onInputClick()">Input</button>
+  <button class="btn btn-primary" (click)="onMultipleChoiceClick()">Multiple Choice</button>
+  <button class="btn btn-primary" (click)="onCheckboxClick()">Checkbox</button>
+</span>
+
+
+  <div *ngIf="stage.stage_type === 'TEXT_ANSWER'">
+    <div *ngFor="let response of stage.choiceText; let i = index">
+      {{response.choice}}:<input type="text" placeholder="Type in response" [(ngModel)]="response.choice">
+      <button (click)="onSubtractChoice(i)"> - </button>
+    </div>
+  </div>
+
+  <div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">
+    <div *ngFor="let response of stage.choiceText; let i = index">
+      <input class="form-check-input" type="radio" name="flexRadioDefault">
+      <input class="form-check-label" [(ngModel)]="response.choice">
+      <button (click)="onSubtractChoice(i)"> - </button>
+    </div>
+  </div>
+
+  <div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">
+    <div *ngFor="let response of stage.choiceText; let i = index ">
+      <input class="form-check-input" type="checkbox" value="" >
+      <input [(ngModel)]="response.choice">
+      <button (click)="onSubtractChoice(i)"> - </button>
+    </div>
+  </div>
+<!--  <div *ngFor="let response of stage.choiceText; let i = index">-->
+<!--    <app-stage-choices [choice] = response [stageType]=stage.stage_type></app-stage-choices>-->
+<!--    <button (click)="onSubtractChoice(i)"> - </button>-->
+<!--  </div>-->
+
+
+  <div>
+    <button (click)="onAddChoice()"> + </button>
+  </div>
+</div>

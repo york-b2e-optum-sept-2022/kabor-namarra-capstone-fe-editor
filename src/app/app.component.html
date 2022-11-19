@@ -1,1 +1,3 @@
-<div>Hello World</div>
+<app-process-dashboard *ngIf="!creatingProcess"></app-process-dashboard>
+
+<app-create-process *ngIf="creatingProcess"></app-create-process>

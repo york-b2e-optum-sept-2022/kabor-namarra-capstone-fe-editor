@@ -1,0 +1,33 @@
+<div *ngIf="!creatingStage">
+  <div>
+    <button (click)="onCloseClick()">Close</button>
+    <button (click)="onSaveProcess()">Save Process</button>
+  </div>
+  <h2 >
+    Process:
+    <input [(ngModel)]="process.name" placeholder="Process Name">
+  </h2>
+
+  <div>
+    <div *ngFor="let stage of process.stages; let i = index">
+      <app-stage [stage]= stage></app-stage>
+      <button (click)="onSubtractStage(i)"> - </button>
+      <span *ngIf="process.stages[i-1]">
+        <button (click)="onUpClick(i)"> < </button>
+      </span>
+      <span *ngIf="process.stages[i+1]">
+        <button (click)="onDownClick(i)"> > </button>
+      </span>
+    </div>
+    <button (click)="onAddClick()">Add Stage</button>
+  </div>
+</div>
+
+<div *ngIf="creatingStage">
+  <h2>
+    Process: {{process.name}}
+  </h2>
+  <div *ngIf="creatingStage">
+    <app-create-stage></app-create-stage>
+  </div>
+</div>

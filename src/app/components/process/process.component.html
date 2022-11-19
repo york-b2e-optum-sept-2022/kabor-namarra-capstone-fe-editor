@@ -1,0 +1,5 @@
+<button (click)="onBackClick()">Back</button>
+<app-stage *ngFor="let stage of process.stages"
+           [stage] = stage
+>
+</app-stage>

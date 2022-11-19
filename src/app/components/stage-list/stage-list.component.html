@@ -1,0 +1,41 @@
+<app-stage *ngFor="let stage of stageList"
+           [stage] = stage
+></app-stage>
+
+<!--<nav>-->
+<!--  <div class="nav nav-tabs" id="nav-tab" role="tablist">-->
+<!--    <span *ngFor="let stage of stageList">-->
+<!--&lt;!&ndash;      <button class="nav-link" id="nav-{{stage.id}}-tab" data-bs-toggle="tab" [attr.data-target]="'#' + stage.id" type="button" role="tab"> * </button>&ndash;&gt;-->
+<!--      <a data-toggle="collapse" [attr.data-target]="'#' + stage.id">  {{stage.id}}  </a>-->
+<!--    </span>-->
+<!--  </div>-->
+<!--</nav>-->
+<!--<div class="tab-content" id="nav-tabContent">-->
+<!--  <span *ngFor="let stage of stageList">-->
+<!--    <div class="tab-pane fade" id="{{stage.id}}" role="tabpanel">-->
+<!--      <app-stage-->
+<!--                 [stage] = stage-->
+<!--      ></app-stage>-->
+<!--    </div>-->
+<!--  </span>-->
+<!--</div>-->
+
+
+
+<!--<div class="container">-->
+<!--  <ul class="nav nav-pills">-->
+<!--    <li *ngFor="let stage of stageList"> <a data-toggle="collapse" [attr.data-target]="'#' + stage.id">  {{stage.id}}  </a>-->
+<!--    </li>-->
+<!--  </ul>-->
+
+<!--  <div class="tab-content">-->
+<!--    <span *ngFor="let stage of stageList">-->
+<!--    <div id="{{stage.id}}" class="tab-pane fade in active">-->
+<!--      <app-stage-->
+<!--        [stage] = stage-->
+<!--      ></app-stage>-->
+<!--    </div>-->
+<!--    </span>-->
+<!--  </div>-->
+<!--</div>-->
+
