@@ -25,6 +25,9 @@ export class ProcessService {
 
   $choice = new Subject<IChoice>();
   $stageType = new Subject<STAGE_TYPES>();
+  $stageIndex = new Subject<number>();
+  $editingStage = new Subject<boolean>();
+  $stageCreatingEditing = new Subject<IStage>();
 
   private creatingProcess: boolean = false;
   private processList: IProcess[] = [];
@@ -34,6 +37,8 @@ export class ProcessService {
   private stageList!: IStage[];
   private newProcessStageList: IStage[] = [];
   private creatingStage: boolean = false;
+  private stageIndex!: number;
+  private editingStage: boolean = false;
 
   private newCreatingProcess: IProcessCreating = {name:"", stages: []};
 
@@ -202,5 +207,24 @@ export class ProcessService {
   onDestroyStage(choice: IChoice){
     this.$choice.next(choice);
   }
+
+  onEditCreatingStage(index:number){
+    this.stageIndex = index;
+    this.onEditStage();
+  }
+  onEditStage(){
+    this.editingStage = !this.editingStage
+    this.$editingStage.next(this.editingStage);
+  }
+  onStageCreatingEditing(){
+    this.$stageCreatingEditing.next(this.newProcessStageList[this.stageIndex]);
+  }
+
+  onUpdateCreatingStage(stage: IStage){
+    this.newProcessStageList.splice(this.stageIndex,1)
+    this.newProcessStageList.splice(this.stageIndex, 0, stage)
+    this.onEditStage();
+  }
+
 
 }

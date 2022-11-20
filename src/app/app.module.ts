@@ -14,6 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { CreateStageComponent } from './components/create-stage/create-stage.component';
 import {FormsModule} from "@angular/forms";
 import { StageChoicesComponent } from './components/stage-choices/stage-choices.component';
+import { EditCreatingStageComponent } from './components/edit-creating-stage/edit-creating-stage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { StageChoicesComponent } from './components/stage-choices/stage-choices.
     StageListComponent,
     StageComponent,
     CreateStageComponent,
-    StageChoicesComponent
+    StageChoicesComponent,
+    EditCreatingStageComponent
   ],
   imports: [
     BrowserModule,

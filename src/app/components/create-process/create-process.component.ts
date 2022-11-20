@@ -16,6 +16,7 @@ export class CreateProcessComponent implements OnInit, OnDestroy{
   stageList: IStage[] = [];
 
   creatingStage: boolean = false;
+  editingStage: boolean = false;
   onDestroy = new Subject();
 
 
@@ -27,6 +28,9 @@ export class CreateProcessComponent implements OnInit, OnDestroy{
     this.processService.$creatingStage.pipe(takeUntil(this.onDestroy)).subscribe( creatingStage => {
       this.creatingStage = creatingStage;
       this.processService.getNewProcessStages();
+    })
+    this.processService.$editingStage.pipe(takeUntil(this.onDestroy)).subscribe( editingStage => {
+      this.editingStage = editingStage;
     })
   }
 
@@ -59,6 +63,10 @@ export class CreateProcessComponent implements OnInit, OnDestroy{
   }
   onDownClick(index: number){
     this.processService.onDownStageClick(index)
+  }
+
+  onEditClick(index:number){
+    this.processService.onEditCreatingStage(index);
   }
 
 }
