@@ -7,6 +7,7 @@ import {STAGE_TYPES} from "./enums/STAGE_TYPES";
 import {IChoice} from "./interfaces/IChoice";
 import {IProcessCreating} from "./interfaces/IProcessCreating";
 import {IStageCreating} from "./interfaces/IStageCreating";
+import {IProcessUpdating} from "./interfaces/IProcessUpdating";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,8 @@ export class ProcessService {
   $newProcessStageList = new Subject<IStage[]>();
   $creatingStage = new Subject<boolean>();
   $newProcessStageListLength = new Subject<number>();
+  $updatingProcess = new Subject<boolean>();
+  $processBeingUpdated = new Subject<IProcess>();
 
   $choice = new Subject<IChoice>();
   $stageType = new Subject<STAGE_TYPES>();
@@ -33,14 +36,14 @@ export class ProcessService {
   private processList: IProcess[] = [];
   private viewingProcess: boolean = false;
   private process!: IProcess;
+  private updatingProcess: boolean = false;
+  private processBeingUpdated!: IProcess;
 
   private stageList!: IStage[];
   private newProcessStageList: IStage[] = [];
   private creatingStage: boolean = false;
   private stageIndex!: number;
   private editingStage: boolean = false;
-
-  private newCreatingProcess: IProcessCreating = {name:"", stages: []};
 
   constructor(public http: HttpService) { }
 
@@ -81,8 +84,10 @@ export class ProcessService {
   onSaveProcessService(process: IProcess){
     console.log(process);
     console.log(this.newProcessStageList)
+    let newCreatingProcess: IProcessCreating = {name:"", stages: []};
+
     if(process.name) {
-      this.newCreatingProcess.name = process.name;
+      newCreatingProcess.name = process.name;
     }
 
     for(let stage of process.stages){
@@ -92,7 +97,7 @@ export class ProcessService {
         newChoiceList.push(choice.choice)
       }
       if(stage.stage_type && stage.stageOrder && stage.question) {
-        this.newCreatingProcess.stages.push({
+        newCreatingProcess.stages.push({
           choiceText: newChoiceList,
           stage_type: stage.stage_type,
           stageOrder: stage.stageOrder,
@@ -101,10 +106,61 @@ export class ProcessService {
       }
     }
 
-    this.http.onSaveProcessClient(this.newCreatingProcess).pipe(first()).subscribe( {
+    this.http.onSaveProcessClient(newCreatingProcess).pipe(first()).subscribe( {
       next: (process) => {
         console.log(process)
         this.onCreatingProcess();
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+  onSaveUpdatedProcess(process: IProcess){
+    console.log(process);
+    console.log(this.newProcessStageList)
+    let newCreatingProcess: IProcessUpdating = {name:"", stages: [], newStages: []};
+
+    if(process.id) {
+      newCreatingProcess.id = process.id;
+    }
+    if(process.name) {
+      newCreatingProcess.name = process.name;
+    }
+    if(newCreatingProcess.newStages) {
+      for (let stage of process.stages) {
+        let newChoiceList: string[] = [];
+
+        for (let choice of stage.choiceText) {
+          newChoiceList.push(choice.choice)
+        }
+        if (stage.stage_type && stage.stageOrder && stage.question && !stage.id) {
+          newCreatingProcess.newStages.push({
+            choiceText: newChoiceList,
+            stage_type: stage.stage_type,
+            stageOrder: stage.stageOrder,
+            question: stage.question
+          })
+        }
+        if (stage.stage_type && stage.stageOrder && stage.question && stage.id) {
+          newCreatingProcess.stages.push({
+            id: stage.id,
+            choiceText: newChoiceList,
+            stage_type: stage.stage_type,
+            stageOrder: stage.stageOrder,
+            question: stage.question
+          })
+        }
+      }
+    }
+
+    console.log(newCreatingProcess)
+
+    this.http.onUpdateProcess(newCreatingProcess).pipe(first()).subscribe( {
+      next: (process) => {
+        console.log(process)
+        this.process = process;
+        this.onUpdatingProcessRequest();
       },
       error: (err) => {
         console.error(err)
@@ -141,17 +197,36 @@ export class ProcessService {
     this.$creatingProcess.next(this.creatingProcess);
   }
 
+  onSendUpdatingProcess(process: IProcess){
+    this.processBeingUpdated = process
+    this.newProcessStageList = process.stages
+    this.onUpdatingProcessRequest();
+  }
+  onUpdatingProcessRequest(){
+    this.updatingProcess = !this.updatingProcess;
+    this.$updatingProcess.next(this.updatingProcess);
+  }
+  getUpdatingProcess(){
+    if(this.updatingProcess) {
+      this.$processBeingUpdated.next(this.processBeingUpdated);
+    }
+  }
+  // onSaveUpdatedProcess(process: IProcess){
+  //   console.log(process)
+  //   this.process = process;
+  //   this.onUpdatingProcessRequest();
+  // }
+
   onProcessClick(process: IProcess){
     this.process = process;
-    this.viewingProcess = !this.viewingProcess;
-    this.$viewingProcess.next(this.viewingProcess);
+    this.onViewing()
   }
 
   getProcess(){
     this.$process.next(this.process);
   }
 
-  onStopViewing(){
+  onViewing(){
     this.viewingProcess = !this.viewingProcess;
     this.$viewingProcess.next(this.viewingProcess);
   }

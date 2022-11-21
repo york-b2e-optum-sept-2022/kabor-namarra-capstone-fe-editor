@@ -13,11 +13,15 @@ export class ProcessComponent implements OnInit, OnDestroy {
 
   process!: IProcess;
   onDestroy = new Subject();
+  updatingProcess: boolean = false;
 
 
   constructor(public processService: ProcessService) {
     this.processService.$process.pipe(takeUntil(this.onDestroy)).subscribe( process => {
       this.process = process;
+    })
+    this.processService.$updatingProcess.pipe(takeUntil(this.onDestroy)).subscribe( updating => {
+      this.updatingProcess = updating;
     })
   }
 
@@ -29,7 +33,10 @@ export class ProcessComponent implements OnInit, OnDestroy {
     this.onDestroy.complete();
   }
   onBackClick(){
-    this.processService.onStopViewing();
+    this.processService.onViewing();
+  }
+  onUpdateClick(){
+    this.processService.onSendUpdatingProcess(this.process);
   }
 
 }

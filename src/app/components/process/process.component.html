@@ -1,5 +1,13 @@
-<button (click)="onBackClick()">Back</button>
-<app-stage *ngFor="let stage of process.stages"
-           [stage] = stage
->
-</app-stage>
+
+<div *ngIf="!updatingProcess">
+  <button (click)="onBackClick()">Back</button>
+  <button (click)="onUpdateClick()">Update</button>
+  <app-stage *ngFor="let stage of process.stages"
+             [stage] = stage
+  >
+  </app-stage>
+</div>
+
+<div *ngIf="updatingProcess">
+  <app-create-process></app-create-process>
+</div>

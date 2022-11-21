@@ -17,6 +17,7 @@ export class CreateProcessComponent implements OnInit, OnDestroy{
 
   creatingStage: boolean = false;
   editingStage: boolean = false;
+  updatingProcess: boolean =false;
   onDestroy = new Subject();
 
 
@@ -32,14 +33,27 @@ export class CreateProcessComponent implements OnInit, OnDestroy{
     this.processService.$editingStage.pipe(takeUntil(this.onDestroy)).subscribe( editingStage => {
       this.editingStage = editingStage;
     })
+    this.processService.$processBeingUpdated.pipe(takeUntil(this.onDestroy)).subscribe( process => {
+      this.process = process;
+      this.updatingProcess = true;
+    })
   }
 
   ngOnInit(): void {
     this.processService.getNewProcessStages();
+    this.processService.getUpdatingProcess();
   }
   ngOnDestroy() {
+    this.updatingProcess = false;
     this.onDestroy.next(null);
     this.onDestroy.complete();
+  }
+
+  onCloseUpdatedClick(){
+    this.processService.onUpdatingProcessRequest()
+  }
+  onSaveProcessUpdated(){
+    this.processService.onSaveUpdatedProcess(this.process)
   }
 
   onCloseClick(){

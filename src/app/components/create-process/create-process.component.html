@@ -1,9 +1,13 @@
 
 <div *ngIf="!editingStage">
   <div *ngIf="!creatingStage">
-    <div>
+    <div *ngIf="!updatingProcess">
       <button (click)="onCloseClick()">Close</button>
-      <button (click)="onSaveProcess()">Save Process</button>
+      <button (click)="onSaveProcess()">Create Process</button>
+    </div>
+    <div *ngIf="updatingProcess">
+      <button (click)="onCloseUpdatedClick()">Close</button>
+      <button (click)="onSaveProcessUpdated()">Save Process</button>
     </div>
     <h2 >
       Process:
