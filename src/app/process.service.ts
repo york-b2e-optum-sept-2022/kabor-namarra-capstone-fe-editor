@@ -88,6 +88,7 @@ export class ProcessService {
         this.$processList.next(this.processList);
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err);
       }
     })
@@ -175,6 +176,7 @@ export class ProcessService {
         this.onUpdatingProcessRequest();
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err)
       }
     })
@@ -217,6 +219,7 @@ export class ProcessService {
         console.log(this.finishedProcessList)
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err)
       }
     })
@@ -229,6 +232,7 @@ export class ProcessService {
         this.onViewing();
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err)
       }
     })
@@ -250,10 +254,10 @@ export class ProcessService {
   //   }
   // }
 
-  onAddStage(){
-    this.creatingStage = !this.creatingStage;
-    this.$creatingStage.next(this.creatingStage);
-  }
+  // onAddStage(){
+  //   this.creatingStage = !this.creatingStage;
+  //   this.$creatingStage.next(this.creatingStage);
+  // }
 
 
 
@@ -359,9 +363,9 @@ export class ProcessService {
     this.$newProcessStageListLength.next(this.newProcessStageList.length +1);
   }
 
-  onDestroyStage(choice: IChoice){
-    this.$choice.next(choice);
-  }
+  // onDestroyStage(choice: IChoice){
+  //   this.$choice.next(choice);
+  // }
 
   onEditCreatingStage(index:number){
     this.stageIndex = index;
