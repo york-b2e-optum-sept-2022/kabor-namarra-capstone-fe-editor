@@ -1,3 +1,5 @@
-<app-process-dashboard *ngIf="!creatingProcess"></app-process-dashboard>
+<app-process-dashboard *ngIf="!creatingProcess && !viewingFinishedProcesses"></app-process-dashboard>
+
+<app-finished-process-list *ngIf="viewingFinishedProcesses"></app-finished-process-list>
 
 <app-create-process *ngIf="creatingProcess"></app-create-process>

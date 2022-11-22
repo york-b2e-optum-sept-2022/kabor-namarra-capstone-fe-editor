@@ -1,26 +1,81 @@
-<div>
-  {{stage.question}}
-</div>
-<div *ngIf="stage.stage_type === 'TEXT_ANSWER'">
-  <div *ngFor="let response of stage.choiceText">
-    {{response.choice}}:<input type="text" placeholder="{{response.choice}}">
-  </div>
+
+<!--<div class="input-group mb-3" *ngIf="stage.stage_type === 'TEXT_ANSWER'">-->
+<!--  <p class="fw-bold">{{stage.question}}</p>-->
+<!--  <div *ngFor="let response of stage.choiceText; let i = index">-->
+<!--    <div class="input-group-prepend">-->
+<!--      <div class="input-group-text" id="{{response.choice}}+{{i}}">{{response.choice}}</div>-->
+<!--    </div>-->
+<!--    <input type="text" class="form-control"  [attr.aria-describedby]="'response.choice'+ 'i'">-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="grid" *ngIf="stage.stage_type === 'TEXT_ANSWER'" >
+  <article>
+    <span class="row-cols-3">
+          <p class="fw-bold">{{stage.question}}</p>
+          <span *ngFor="let response of stage.choiceText; let i = index">
+            <span class="input-group mb-3 center-block" >
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="{{response.choice}}+{{i}}">{{response.choice}}</div>
+              </div>
+              <input type="text" class="form-control" size="100" [attr.aria-describedby]="'response.choice'+ 'i'">
+            </span>
+          </span>
+    </span>
+  </article>
 </div>
 
-<div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">
-  <div *ngFor="let response of stage.choiceText; let i = index">
-    <input class="form-check-input" type="radio" name="flexRadioDefault" id="{{response}} + {{i}}">
-    <label class="form-check-label" for="{{response}} + {{i}}">
-      {{response.choice}}
-    </label>
-  </div>
+<div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">
+  <article>
+    <div class="form-check" >
+      <div class="row col-5">
+          <p class="fw-bold">{{stage.question}}</p>
+          <div class="form-check mb-2">
+            <div *ngFor="let response of stage.choiceText; let i = index">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="{{response}} + {{i}}">
+              <label class="form-check-label" for="{{response}} + {{i}}">
+                {{response.choice}}
+              </label>
+            </div>
+          </div>
+      </div>
+    </div>
+  </article>
 </div>
 
-<div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">
-  <div *ngFor="let response of stage.choiceText; let i = index">
-    <input class="form-check-input" type="checkbox" value="" id="{{response}} + {{i}}">
-    <label class="form-check-label" for="{{response}} + {{i}}">
-      {{response.choice}}
-    </label>
-  </div>
+
+<!--<div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">-->
+<!--  <div *ngFor="let response of stage.choiceText; let i = index">-->
+<!--    <input class="form-check-input" type="radio" name="flexRadioDefault" id="{{response}} + {{i}}">-->
+<!--    <label class="form-check-label" for="{{response}} + {{i}}">-->
+<!--      {{response.choice}}-->
+<!--    </label>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="form-check" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">-->
+<!--  <div *ngFor="let response of stage.choiceText; let i = index">-->
+<!--    <input class="form-check-input" type="checkbox" value="" id="{{response}} + {{i}}">-->
+<!--    <label class="form-check-label" for="{{response}} + {{i}}">-->
+<!--      {{response.choice}}-->
+<!--    </label>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">
+  <article >
+    <div class="form-check" >
+      <div class="row col-5">
+          <p class="fw-bold">{{stage.question}}</p>
+          <div *ngFor="let response of stage.choiceText; let i = index">
+            <input class="form-check-input" type="checkbox" value="" id="{{response}} + {{i}}">
+            <label class="form-check-label" for="{{response}} + {{i}}">
+              {{response.choice}}
+            </label>
+          </div>
+      </div>
+    </div>
+  </article>
 </div>

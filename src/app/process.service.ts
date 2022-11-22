@@ -8,6 +8,8 @@ import {IChoice} from "./interfaces/IChoice";
 import {IProcessCreating} from "./interfaces/IProcessCreating";
 import {IStageCreating} from "./interfaces/IStageCreating";
 import {IProcessUpdating} from "./interfaces/IProcessUpdating";
+import {IProcessAnswered} from "./interfaces/IProcessAnswered";
+import {IStageAnswered} from "./interfaces/IStageAnswered";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,11 @@ export class ProcessService {
   $editingStage = new Subject<boolean>();
   $stageCreatingEditing = new Subject<IStage>();
 
+  $viewingFinished = new Subject<boolean>();
+  $finishedProcessList = new Subject<IProcess[]>();
+  $finishedProcess = new Subject<IProcess>();
+  $viewingFinishedProcess = new Subject<boolean>();
+
   private creatingProcess: boolean = false;
   private processList: IProcess[] = [];
   private viewingProcess: boolean = false;
@@ -44,6 +51,11 @@ export class ProcessService {
   private creatingStage: boolean = false;
   private stageIndex!: number;
   private editingStage: boolean = false;
+
+  private viewingFinished: boolean = false;
+  private finishedProcessList: IProcess[] = [];
+  private finishedProcess!: IProcess;
+  private viewingFinishedProcess: boolean = false;
 
   constructor(public http: HttpService) { }
 
@@ -168,6 +180,60 @@ export class ProcessService {
     })
   }
 
+  getFinishedProcesses(){
+    this.finishedProcessList = [];
+    this.http.getFinishedProcesses().pipe(first()).subscribe({
+      next: (finishedProcessList) => {
+        for(let process of finishedProcessList){
+          let getStageList: IStage[] = [];
+          for(let stage of process.finishedStages){
+            let choiceList: IChoice[] = [];
+
+            if(stage.stage_type && stage.stageOrder && stage.choiceText && stage.question){
+              for (let index in stage.choiceText) {
+                choiceList.push({choice: stage.choiceText[index], response: stage.response[index]})
+              }
+            }
+            getStageList.push({id: stage.id, choiceText: choiceList, stage_type: stage.stage_type, stageOrder: stage.stageOrder, question:stage.question})
+          }
+          this.finishedProcessList.push({id: process.id, name: process.name, stages: getStageList});
+        }
+
+        // for(let finishedProcess of finishedProcessList){
+        //   let finishedStages: IStage[] = [];
+        //   for(let stages of finishedProcess.finishedStages){
+        //     console.log("hello")
+        //     let choices: IChoice[] = [];
+        //     for(let index in stages.choiceText){
+        //       choices.push({choice: stages.choiceText[index], response: stages.choiceText[index]})
+        //     }
+        //     finishedStages.push({id: stages.id, choiceText: choices, stage_type: stages.stage_type, stageOrder: stages.stageOrder, question: stages.question})
+        //   }
+        //
+        //   this.finishedProcessList.push({id: finishedProcess.id, name: finishedProcess.name, stages: finishedStages})
+        // }
+
+        this.$finishedProcessList.next(this.finishedProcessList);
+        console.log(this.finishedProcessList)
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+
+  onDeleteClick(processId: number){
+    this.http.deleteProcess(processId).pipe(first()).subscribe({
+      next: (deletedProcess) => {
+        console.log("deleted")
+        this.onViewing();
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
+
 
   // getStageList(){
   //   if(this.process.id) {
@@ -221,9 +287,22 @@ export class ProcessService {
     this.process = process;
     this.onViewing()
   }
+  onFinishedProcessClick(finishedProcess: IProcess){
+    this.finishedProcess = finishedProcess;
+    this.onViewingFinishedProcess();
+  }
 
   getProcess(){
     this.$process.next(this.process);
+  }
+
+  getFinishedProcess(){
+    this.$finishedProcess.next(this.finishedProcess);
+  }
+
+  onViewingFinishedProcess(){
+    this.viewingFinishedProcess = !this.viewingFinishedProcess
+    this.$viewingFinishedProcess.next(this.viewingFinishedProcess)
   }
 
   onViewing(){
@@ -234,6 +313,7 @@ export class ProcessService {
   getNewProcessStages(){
     this.$newProcessStageList.next(this.newProcessStageList);
   }
+
 
   organizeNewProcessStageList(){
     console.log("organizing:")
@@ -299,6 +379,11 @@ export class ProcessService {
     this.newProcessStageList.splice(this.stageIndex,1)
     this.newProcessStageList.splice(this.stageIndex, 0, stage)
     this.onEditStage();
+  }
+
+  onViewFinished(){
+    this.viewingFinished = !this.viewingFinished;
+    this.$viewingFinished.next(this.viewingFinished);
   }
 
 

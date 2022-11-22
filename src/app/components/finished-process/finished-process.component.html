@@ -1,0 +1,7 @@
+<h1>{{finishedProcess.name}}</h1>
+<div>
+  <app-finished-stage *ngFor="let stage of finishedProcess.stages"
+             [finishedStage] = stage
+  >
+  </app-finished-stage>
+</div>

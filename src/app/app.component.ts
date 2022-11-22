@@ -10,10 +10,14 @@ export class AppComponent {
   title = 'kabor-namarra-capstone-fe-editor';
 
   creatingProcess: boolean = false;
+  viewingFinishedProcesses: boolean = false;
 
   constructor(public processService: ProcessService) {
     this.processService.$creatingProcess.subscribe(creatingProcess => {
       this.creatingProcess = creatingProcess;
+    })
+    this.processService.$viewingFinished.subscribe(viewingFinished => {
+      this.viewingFinishedProcesses = viewingFinished;
     })
   }
 

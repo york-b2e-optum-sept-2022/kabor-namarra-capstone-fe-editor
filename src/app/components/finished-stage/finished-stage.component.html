@@ -1,0 +1,28 @@
+<div>
+  {{finishedStage.question}}
+</div>
+<div *ngIf="finishedStage.stage_type === 'TEXT_ANSWER'">
+  <div *ngFor="let response of finishedStage.choiceText; let i = index">
+    {{response.choice}}:<input type="text" [ngModel]="response.response" disabled>
+  </div>
+</div>
+
+<div class="form-check" *ngIf="finishedStage.stage_type === 'MULTIPLE_CHOICE'">
+  <div *ngFor="let response of finishedStage.choiceText; let i = index">
+    <input *ngIf="response.response !== '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choice}} + {{i}}" checked disabled>
+    <input *ngIf="response.response === '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choice}} + {{i}}" disabled>
+    <label class="form-check-label" for="{{response.choice}} + {{i}}">
+      {{response.choice}}
+    </label>
+  </div>
+</div>
+
+<div class="form-check" *ngIf="finishedStage.stage_type === 'MULTIPLE_CHECKBOX'">
+  <div *ngFor="let response of finishedStage.choiceText; let i = index">
+    <input *ngIf="response.response !== '' " class="form-check-input" type="checkbox" value="" id="{{response.choice}} + {{i}}" checked disabled>
+    <input *ngIf="response.response === '' " class="form-check-input" type="checkbox" value="" id="{{response.choice}} + {{i}}" disabled>
+    <label class="form-check-label" for="{{response.choice}} + {{i}}">
+      {{response.choice}}
+    </label>
+  </div>
+</div>

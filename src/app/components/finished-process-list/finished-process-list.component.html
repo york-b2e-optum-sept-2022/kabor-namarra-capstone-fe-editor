@@ -1,0 +1,11 @@
+<div *ngIf="!viewingFinishedProcess">
+  <button (click)="onExitFinishedClick()">Back</button>
+  <app-finished-process-display *ngFor="let process of finishedProcessList"
+                       [finishedProcess] = process
+  ></app-finished-process-display>
+</div>
+
+<div *ngIf="viewingFinishedProcess">
+  <button (click)="onBackClick()">Back</button>
+  <app-finished-process></app-finished-process>
+</div>

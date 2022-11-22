@@ -1,3 +1,4 @@
 export interface IChoice{
-  choice: string
+  choice: string,
+  response?: string
 }

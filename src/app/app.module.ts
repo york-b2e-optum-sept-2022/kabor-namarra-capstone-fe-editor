@@ -15,6 +15,10 @@ import { CreateStageComponent } from './components/create-stage/create-stage.com
 import {FormsModule} from "@angular/forms";
 import { StageChoicesComponent } from './components/stage-choices/stage-choices.component';
 import { EditCreatingStageComponent } from './components/edit-creating-stage/edit-creating-stage.component';
+import { FinishedProcessListComponent } from './components/finished-process-list/finished-process-list.component';
+import { FinishedProcessComponent } from './components/finished-process/finished-process.component';
+import { FinishedStageComponent } from './components/finished-stage/finished-stage.component';
+import { FinishedProcessDisplayComponent } from './components/finished-process-display/finished-process-display.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { EditCreatingStageComponent } from './components/edit-creating-stage/edi
     StageComponent,
     CreateStageComponent,
     StageChoicesComponent,
-    EditCreatingStageComponent
+    EditCreatingStageComponent,
+    FinishedProcessListComponent,
+    FinishedProcessComponent,
+    FinishedStageComponent,
+    FinishedProcessDisplayComponent
   ],
   imports: [
     BrowserModule,

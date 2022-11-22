@@ -29,4 +29,8 @@ export class ProcessDashboardComponent implements OnInit, OnDestroy {
     this.processService.onCreatingProcess();
   }
 
+  onViewFinished(){
+    this.processService.onViewFinished();
+  }
+
 }

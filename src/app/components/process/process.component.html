@@ -1,12 +1,32 @@
 
-<div *ngIf="!updatingProcess">
-  <button (click)="onBackClick()">Back</button>
-  <button (click)="onUpdateClick()">Update</button>
-  <app-stage *ngFor="let stage of process.stages"
-             [stage] = stage
-  >
-  </app-stage>
+<div id="processes" *ngIf="!updatingProcess">
+  <h1>
+    {{process.name}}
+  </h1>
+  <button type="button" class="btn btn-secondary" (click)="onBackClick()">Back</button>
+  <button type="button" class="btn btn-warning" (click)="onUpdateClick()">Update</button>
+  <button type="button" class="btn btn-danger" *ngIf="!confirm" (click)="onDeleteClick()">Delete</button>
+  <div *ngIf="confirm">
+    Are you sure?
+    <button type="button" class="btn btn-primary"(click)="onDeleteClick()"> No </button>
+    <button type="button" class="btn btn-danger" (click)="onConfirmClick()"> Yes </button>
+  </div>
+  <span id="scroll-Btn">
+    <button *ngIf="canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()">Previous</button>
+    <button *ngIf="!canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()" disabled>Previous</button>
+    <button *ngIf="canGoUp" type="button" class="btn btn-secondary" (click)="onNextClick()">Next</button>
+    <button *ngIf="!canGoUp" type="button" class="btn btn-secondary" (click)="onNextClick()" disabled>Next</button>
+  </span>
+  <div id="stages">
+<!--    <button (click)="onthis()">Hello</button>-->
+    <app-stage
+               [stage] = stage
+    >
+    </app-stage>
+  </div>
+
 </div>
+
 
 <div *ngIf="updatingProcess">
   <app-create-process></app-create-process>

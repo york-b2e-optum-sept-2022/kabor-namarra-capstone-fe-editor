@@ -1,0 +1,12 @@
+button{
+  margin: 5px;
+}
+
+#stages{
+  display: grid;
+}
+
+#scroll-Btn{
+  display: flex;
+  justify-content: center;
+}
