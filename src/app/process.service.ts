@@ -165,6 +165,9 @@ export class ProcessService {
           })
         }
       }
+
+      // newCreatingProcess.stages.sort((p1, p2) =>
+      //   (p1.stageOrder > p2.stageOrder) ? 1 : (p1.stageOrder < p2.stageOrder) ? -1 : 0);
     }
 
     console.log(newCreatingProcess)

@@ -1,5 +1,8 @@
 <div *ngIf="!viewingFinishedProcess">
   <button type="button" class="btn btn-secondary" (click)="onExitFinishedClick()">Back</button>
+  <h1>
+    Finished Processes:
+  </h1>
   <app-finished-process-display *ngFor="let process of finishedProcessList"
                        [finishedProcess] = process
   ></app-finished-process-display>
