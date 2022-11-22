@@ -2,31 +2,31 @@
 <div *ngIf="!editingStage">
   <div *ngIf="!creatingStage">
     <div *ngIf="!updatingProcess">
-      <button (click)="onCloseClick()">Close</button>
-      <button (click)="onSaveProcess()">Create Process</button>
-    </div>
-    <div *ngIf="updatingProcess">
-      <button (click)="onCloseUpdatedClick()">Close</button>
-      <button (click)="onSaveProcessUpdated()">Save Process</button>
-    </div>
     <h2 >
       Process:
       <input [(ngModel)]="process.name" placeholder="Process Name">
     </h2>
+      <button type="button" class="btn btn-secondary" (click)="onCloseClick()">Close</button>
+      <button type="button" class="btn btn-success" (click)="onSaveProcess()">Save Process</button>
+      <button type="button" class="btn btn-success" (click)="onAddClick()">Add Stage</button>
+    </div>
+    <div *ngIf="updatingProcess">
+      <button type="button" class="btn btn-secondary" (click)="onCloseUpdatedClick()">Close</button>
+      <button type="button" class="btn btn-success" (click)="onSaveProcessUpdated()">Save Process</button>
+    </div>
 
     <div>
       <div *ngFor="let stage of process.stages; let i = index">
         <app-stage [stage]= stage></app-stage>
-        <button (click)="onEditClick(i)">Edit</button>
-        <button (click)="onSubtractStage(i)"> - </button>
+        <button type="button" class="btn btn-primary" (click)="onEditClick(i)">Edit</button>
+        <button type="button" class="btn btn-secondary" (click)="onSubtractStage(i)"> - </button>
         <span *ngIf="process.stages[i-1]">
-          <button (click)="onUpClick(i)"> < </button>
+          <button type="button" class="btn btn-secondary" (click)="onUpClick(i)"> < </button>
         </span>
         <span *ngIf="process.stages[i+1]">
-          <button (click)="onDownClick(i)"> > </button>
+          <button type="button" class="btn btn-secondary" (click)="onDownClick(i)"> > </button>
         </span>
       </div>
-      <button (click)="onAddClick()">Add Stage</button>
     </div>
   </div>
 

@@ -1,1 +1,10 @@
-<h2 (click)="onProcessClick()">{{finishedProcess.name}}</h2>
+<!--<h2 (click)="onProcessClick()">{{finishedProcess.name}}</h2>-->
+
+<main class="grid">
+  <article>
+    <div class="text">
+      <h2>{{finishedProcess.name}}</h2>
+      <button type="button" class="btn btn-primary" (click)="onProcessClick()">Start Process</button>
+    </div>
+  </article>
+</main>

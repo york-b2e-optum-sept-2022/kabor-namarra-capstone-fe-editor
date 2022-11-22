@@ -11,7 +11,7 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class CreateStageComponent implements OnInit, OnDestroy{
 
-    stage: IStage = { choiceText: [], stage_type: STAGE_TYPES.TEXT_ANSWER,stageOrder: 0, question: ""}
+    stage: IStage = { choiceText: [{choice:""}], stage_type: STAGE_TYPES.TEXT_ANSWER,stageOrder: 0, question: ""}
     // choiceText: string[] = [];
     // stage_type: STAGE_TYPES = STAGE_TYPES.TEXT_ANSWER;
     // question: string = "";
