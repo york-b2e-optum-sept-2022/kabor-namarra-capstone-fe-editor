@@ -19,6 +19,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
   confirm: boolean = false;
   canGoDown: boolean = false;
   canGoUp: boolean = false;
+  stagePoint: number = 1;
 
 
   constructor(public processService: ProcessService) {
@@ -57,6 +58,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
   }
 
   onNextClick(){
+    this.stagePoint ++;
     if(this.stage) {
       if (this.stage.stageOrder) {
         this.stage = this.process.stages[this.stage.stageOrder]
@@ -74,6 +76,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
 
   }
   onPreviousClick(){
+    this.stagePoint --;
     if(this.stage) {
       if (this.stage.stageOrder) {
         this.stage = this.process.stages[this.stage.stageOrder-2]

@@ -17,6 +17,9 @@
     <button *ngIf="canGoUp" type="button" class="btn btn-secondary" (click)="onNextClick()">Next</button>
     <button *ngIf="!canGoUp" type="button" class="btn btn-secondary" (click)="onNextClick()" disabled>Next</button>
   </span>
+  <h5 id="stagePoint">
+    {{stagePoint}}/{{process.stages.length}}
+  </h5>
   <div id="stages">
 <!--    <button (click)="onthis()">Hello</button>-->
     <app-stage
