@@ -19,22 +19,24 @@
     <div>
       <div *ngFor="let stage of process.stages; let i = index">
         <app-stage [stage]= stage></app-stage>
-        <button type="button" class="btn btn-primary" (click)="onEditClick(i)">Edit</button>
-        <button type="button" class="btn btn-danger" (click)="onSubtractStage(i)"> - </button>
-        <span *ngIf="process.stages[i-1]">
+        <div id="stageButtons">
+          <button type="button" class="btn btn-primary" (click)="onEditClick(i)">Edit</button>
+          <button type="button" class="btn btn-danger" (click)="onSubtractStage(i)"> - </button>
+          <span *ngIf="process.stages[i-1]">
           <button type="button" class="btn btn-secondary" (click)="onUpClick(i)"> < </button>
-        </span>
-        <span *ngIf="process.stages[i+1]">
-          <button type="button" class="btn btn-secondary" (click)="onDownClick(i)"> > </button>
-        </span>
+          </span>
+            <span *ngIf="process.stages[i+1]">
+            <button type="button" class="btn btn-secondary" (click)="onDownClick(i)"> > </button>
+          </span>
+        </div>
       </div>
     </div>
   </div>
 
   <div *ngIf="creatingStage">
-    <h2>
-      Process: {{process.name}}
-    </h2>
+    <h1>
+      {{process.name}}
+    </h1>
     <div>
       <app-create-stage></app-create-stage>
     </div>
@@ -42,9 +44,9 @@
 </div>
 
 <div *ngIf="editingStage">
-  <h2>
-    Process: {{process.name}}
-  </h2>
+  <h1>
+    {{process.name}}
+  </h1>
   <div>
     <app-edit-creating-stage></app-edit-creating-stage>
   </div>
