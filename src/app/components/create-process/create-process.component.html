@@ -19,7 +19,7 @@
       <div *ngFor="let stage of process.stages; let i = index">
         <app-stage [stage]= stage></app-stage>
         <button type="button" class="btn btn-primary" (click)="onEditClick(i)">Edit</button>
-        <button type="button" class="btn btn-secondary" (click)="onSubtractStage(i)"> - </button>
+        <button type="button" class="btn btn-danger" (click)="onSubtractStage(i)"> - </button>
         <span *ngIf="process.stages[i-1]">
           <button type="button" class="btn btn-secondary" (click)="onUpClick(i)"> < </button>
         </span>
