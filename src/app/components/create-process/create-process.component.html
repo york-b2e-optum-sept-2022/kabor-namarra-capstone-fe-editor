@@ -11,10 +11,10 @@
       <button type="button" class="btn btn-success" (click)="onSaveProcessUpdated()">Save Process</button>
       <button type="button" class="btn btn-success" (click)="onAddClick()">Add Stage</button>
     </div>
-    <h2 >
+    <h1>
       Process:
       <input [(ngModel)]="process.name" placeholder="Process Name">
-    </h2>
+    </h1>
 
     <div>
       <div *ngFor="let stage of process.stages; let i = index">
