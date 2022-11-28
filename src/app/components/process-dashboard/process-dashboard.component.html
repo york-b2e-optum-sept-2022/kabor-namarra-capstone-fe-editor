@@ -3,9 +3,9 @@
     <button type="button" class="btn btn-success" id="btn1" (click)="onCreateClick()">Create Process</button>
     <button type="button" class="btn btn-primary" id="bt2" (click)="onViewFinished()">View Finished Processes</button>
   </h3>
-  <div>
+  <span>
     <app-process-list></app-process-list>
-  </div>
+  </span>
 </div>
 <div *ngIf="viewingProcess">
   <app-process></app-process>

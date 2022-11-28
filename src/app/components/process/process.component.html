@@ -1,8 +1,5 @@
 
 <div id="processes" *ngIf="!updatingProcess">
-  <h1>
-    {{process.name}}
-  </h1>
   <button type="button" class="btn btn-secondary" (click)="onBackClick()">Back</button>
   <button type="button" class="btn btn-warning" (click)="onUpdateClick()">Update</button>
   <button type="button" class="btn btn-danger" *ngIf="!confirm" (click)="onDeleteClick()">Delete</button>
@@ -11,6 +8,9 @@
     <button type="button" class="btn btn-primary"(click)="onDeleteClick()"> No </button>
     <button type="button" class="btn btn-danger" (click)="onConfirmClick()"> Yes </button>
   </div>
+  <h1>
+    {{process.name}}
+  </h1>
   <span id="scroll-Btn">
     <button *ngIf="canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()">Previous</button>
     <button *ngIf="!canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()" disabled>Previous</button>

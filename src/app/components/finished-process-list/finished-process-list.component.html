@@ -3,9 +3,11 @@
   <h1>
     Finished Processes:
   </h1>
-  <app-finished-process-display *ngFor="let process of finishedProcessList"
-                       [finishedProcess] = process
-  ></app-finished-process-display>
+  <div class="cards">
+    <app-finished-process-display *ngFor="let process of finishedProcessList"
+                                  [finishedProcess] = process
+    ></app-finished-process-display>
+  </div>
 </div>
 
 <div *ngIf="viewingFinishedProcess">
