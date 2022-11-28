@@ -70,19 +70,19 @@
   <!--    </span>-->
   <!--  </article>-->
 
-  <div >
+  <article>
     <div class="form-group">
       <label for="question">Question: </label>
       <textarea  [(ngModel)]="stage.question" class="form-control" id="question" rows="3"></textarea>
     </div>
-    <div>
-      Pick stage type:
+    <div id="stageTypeSelectButtons">
+      <div>
+        Pick stage type:
+      </div>
+      <button class="btn btn-primary" aria-pressed="true" (click)="onInputClick()">Input</button>
+      <button class="btn btn-primary" (click)="onMultipleChoiceClick()">Multiple Choice</button>
+      <button class="btn btn-primary" (click)="onCheckboxClick()">Checkbox</button>
     </div>
-    <span>
-    <button class="btn btn-primary" aria-pressed="true" (click)="onInputClick()">Input</button>
-    <button class="btn btn-primary" (click)="onMultipleChoiceClick()">Multiple Choice</button>
-    <button class="btn btn-primary" (click)="onCheckboxClick()">Checkbox</button>
-  </span>
 
     <div *ngIf="stage.stage_type === 'TEXT_ANSWER'">
       <div *ngFor="let response of stage.choiceText; let i = index">
@@ -91,10 +91,14 @@
           <div class="input-group-prepend">
             <div *ngIf="response.choice" class="input-group-text" id="{{response.choice}}+{{i}}">{{response.choice}}</div>
           </div>
-          <input type="text" class="form-control" placeholder="Type in response" [(ngModel)]="response.choice" [attr.aria-describedby]="'response.choice'+ 'i'">
-          <br>
+          <div>
+            <input type="text" class="form-control" placeholder="Type in response" size="{{response.choice.length + 5}}" [(ngModel)]="response.choice" [attr.aria-describedby]="'response.choice'+ 'i'">
+          </div>
+          <div>
+            <button type="button" class="btn btn-danger" (click)="onSubtractChoice(i)"> - </button>
+          </div>
+<!--          <br>-->
         </span>
-        <button type="button" class="btn btn-danger" (click)="onSubtractChoice(i)"> - </button>
       </div>
     </div>
 
@@ -122,5 +126,5 @@
     <div>
       <button type="button" class="btn btn-success" (click)="onAddChoice()"> + </button>
     </div>
-  </div>
+  </article>
 </div>
