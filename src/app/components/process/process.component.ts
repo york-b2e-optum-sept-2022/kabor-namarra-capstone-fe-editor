@@ -25,7 +25,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
     this.processService.$process.pipe(takeUntil(this.onDestroy)).subscribe( process => {
       this.process = process;
       this.stage = process.stages[0]
-      if(process.stages.length >0){
+      if(process.stages.length >1){
         this.canGoUp = true;
       }
     })
@@ -71,6 +71,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
         this.canGoUp = false;
       }
     }
+
   }
   onPreviousClick(){
     if(this.stage) {

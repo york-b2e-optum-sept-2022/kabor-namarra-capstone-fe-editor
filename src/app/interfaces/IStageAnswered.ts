@@ -5,6 +5,6 @@ export interface IStageAnswered{
   choiceText: string[],
   response: string[],
   stage_type?: STAGE_TYPES,
-  stageOrder?: number,
+  stageOrder: number,
   question: string
 }
