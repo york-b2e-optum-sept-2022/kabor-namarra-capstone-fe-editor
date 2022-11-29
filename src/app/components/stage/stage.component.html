@@ -12,8 +12,8 @@
 
 <div class="grid" *ngIf="stage.stage_type === 'TEXT_ANSWER'" >
   <article>
+    <p class="fw-bold questionText">{{stage.question}}</p>
     <span class="row-cols-5">
-          <p class="fw-bold">{{stage.question}}</p>
           <span *ngFor="let response of stage.choiceText; let i = index">
             <span class="input-group mb-3 center-block" >
               <div class="input-group-prepend">
@@ -29,8 +29,8 @@
 <div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">
   <article>
     <div class="form-check" >
+      <p class="fw-bold questionText">{{stage.question}}</p>
       <div class="row col-5">
-          <p class="fw-bold">{{stage.question}}</p>
             <div *ngFor="let response of stage.choiceText; let i = index">
               <input class="form-check-input" type="radio" name="flexRadioDefault" id="{{response}} + {{i}}">
               <label class="form-check-label" for="{{response}} + {{i}}">
@@ -65,8 +65,8 @@
 <div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">
   <article >
     <div class="form-check" >
+      <p class="fw-bold questionText">{{stage.question}}</p>
       <div class="row col-5">
-          <p class="fw-bold">{{stage.question}}</p>
           <div *ngFor="let response of stage.choiceText; let i = index">
             <input class="form-check-input" type="checkbox" value="" id="{{response}} + {{i}}">
             <label class="form-check-label" for="{{response}} + {{i}}">
