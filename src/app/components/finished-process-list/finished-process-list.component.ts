@@ -14,6 +14,8 @@ export class FinishedProcessListComponent implements OnInit, OnDestroy {
   finishedProcessList!: IProcess[];
   viewingFinishedProcess: boolean = false;
   onDestroy = new Subject();
+  searchText: string = "";
+  sortAZ: boolean = true;
 
   constructor(public processService: ProcessService) {
     this.processService.$viewingFinishedProcess.pipe(takeUntil(this.onDestroy)).subscribe( viewing => {
@@ -22,6 +24,9 @@ export class FinishedProcessListComponent implements OnInit, OnDestroy {
     this.processService.$finishedProcessList.pipe(takeUntil(this.onDestroy)).subscribe( finishedProcessList => {
       this.finishedProcessList = finishedProcessList;
     })
+    // this.processService.$finishedProcessList.pipe(takeUntil(this.onDestroy)).subscribe(sortedProcesses => {
+    //   this.finishedProcessList = sortedProcesses;
+    // })
   }
 
   ngOnInit(): void {
@@ -38,6 +43,28 @@ export class FinishedProcessListComponent implements OnInit, OnDestroy {
 
   onBackClick(){
     this.processService.onViewingFinishedProcess();
+  }
+
+  onSearchTextChange(text: string) {
+    this.processService.onSearchTextChange(text);
+  }
+
+  sortAlphabetically(){
+    this.sortAZ = false;
+    this.finishedProcessList.sort(function(a, b) {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA > textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+  }
+
+  reverseAlphabetically(){
+    this.sortAZ = true;
+    this.finishedProcessList.sort(function(a, b) {
+      let textA = a.name.toUpperCase();
+      let textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
   }
 
 }

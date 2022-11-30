@@ -38,6 +38,7 @@ export class ProcessService {
   $finishedProcessList = new Subject<IProcess[]>();
   $finishedProcess = new Subject<IProcess>();
   $viewingFinishedProcess = new Subject<boolean>();
+  $sortedFinishedProcesses = new Subject<IProcessAnswered[]>();
 
   private creatingProcess: boolean = false;
   private processList: IProcess[] = [];
@@ -56,6 +57,7 @@ export class ProcessService {
   private finishedProcessList: IProcess[] = [];
   private finishedProcess!: IProcess;
   private viewingFinishedProcess: boolean = false;
+  private sortedFinishedProcesses: IProcessAnswered[] = [];
 
   constructor(public http: HttpService) { }
 
@@ -190,6 +192,13 @@ export class ProcessService {
     this.finishedProcessList = [];
     this.http.getFinishedProcesses().pipe(first()).subscribe({
       next: (finishedProcessList) => {
+
+        finishedProcessList.sort((date1, date2) => {
+          const c = new Date(date1.date);
+          const d = new Date(date2.date);
+          return d.getTime() - c.getTime();
+        });
+        this.sortedFinishedProcesses = finishedProcessList;
         for(let process of finishedProcessList) {
           process.finishedStages.sort((p1, p2) =>
             (p1.stageOrder > p2.stageOrder) ? 1 : (p1.stageOrder < p2.stageOrder) ? -1 : 0);
@@ -206,22 +215,17 @@ export class ProcessService {
             }
             getStageList.push({id: stage.id, choiceText: choiceList, stage_type: stage.stage_type, stageOrder: stage.stageOrder, question:stage.question})
           }
-          this.finishedProcessList.push({id: process.id, name: process.name, stages: getStageList});
+          this.finishedProcessList.push({id: process.id, name: process.name, stages: getStageList, date: process.date});
         }
-
-        // for(let finishedProcess of finishedProcessList){
-        //   let finishedStages: IStage[] = [];
-        //   for(let stages of finishedProcess.finishedStages){
-        //     console.log("hello")
-        //     let choices: IChoice[] = [];
-        //     for(let index in stages.choiceText){
-        //       choices.push({choice: stages.choiceText[index], response: stages.choiceText[index]})
-        //     }
-        //     finishedStages.push({id: stages.id, choiceText: choices, stage_type: stages.stage_type, stageOrder: stages.stageOrder, question: stages.question})
-        //   }
+        // this.finishedProcessList.sort((a,b) =>
         //
-        //   this.finishedProcessList.push({id: finishedProcess.id, name: finishedProcess.name, stages: finishedStages})
-        // }
+        //   b.date - a.date
+        // );
+        // this.finishedProcessList.sort((date1, date2) => {
+        //   const c = new Date(date1.date);
+        //   const d = new Date(date2.date);
+        //   return c.getTime() - d.getTime();
+        // });
 
         this.$finishedProcessList.next(this.finishedProcessList);
         console.log(this.finishedProcessList)
@@ -396,6 +400,40 @@ export class ProcessService {
   onViewFinished(){
     this.viewingFinished = !this.viewingFinished;
     this.$viewingFinished.next(this.viewingFinished);
+  }
+
+  onSearchTextChange(searchText: string) {
+    // let finishedProcessList: IProcessAnswered[] = {...this.sortedFinishedProcesses};
+    // let sortedProcesses: IProcess[] = [];
+    // for(let process of finishedProcessList) {
+    //   process.finishedStages.sort((p1, p2) =>
+    //     (p1.stageOrder > p2.stageOrder) ? 1 : (p1.stageOrder < p2.stageOrder) ? -1 : 0);
+    // }
+    // for(let process of finishedProcessList) {
+    //   let getStageList: IStage[] = [];
+    //   for (let stage of process.finishedStages) {
+    //     let choiceList: IChoice[] = [];
+    //
+    //     if (stage.stage_type && stage.stageOrder && stage.choiceText && stage.question) {
+    //       for (let index in stage.choiceText) {
+    //         choiceList.push({choice: stage.choiceText[index], response: stage.response[index]})
+    //       }
+    //     }
+    //     getStageList.push({
+    //       id: stage.id,
+    //       choiceText: choiceList,
+    //       stage_type: stage.stage_type,
+    //       stageOrder: stage.stageOrder,
+    //       question: stage.question
+    //     })
+    //   }
+    //   sortedProcesses.push({id: process.id, name: process.name, stages: getStageList, date: process.date});
+    // }
+
+    this.$finishedProcessList.next(
+      this.finishedProcessList.filter(product => product.name.toUpperCase().includes(searchText.toUpperCase()))
+    );
+    console.log(this.finishedProcessList)
   }
 
 

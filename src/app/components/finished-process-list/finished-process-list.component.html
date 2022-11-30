@@ -3,6 +3,17 @@
   <h1>
     Finished Processes:
   </h1>
+  <div class="filters">
+    Search:
+    <input
+      [ngModel]="searchText"
+      (ngModelChange)="onSearchTextChange($event)"
+      type="text" placeholder="enter process name"
+    >
+    <button>Date<i class="bi bi-arrow-down-short"></i></button>
+    <button *ngIf="sortAZ" (click)="sortAlphabetically()">A-Z</button>
+    <button *ngIf="!sortAZ" (click)="reverseAlphabetically()">Z-A</button>
+  </div>
   <div class="cards">
     <app-finished-process-display *ngFor="let process of finishedProcessList"
                                   [finishedProcess] = process
